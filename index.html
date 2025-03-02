@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html> 
+<html>
     <!-- The following code has been developed by students and/or researchers of the Freshman Research Initiative DIY Diagnostics Stream at The University of Texas at Austin.  This code is shared for demonstration purposes and should not be considered a product -- it is for entertainment purposes only.  Any user of this code does so at their own risk. Members of the DIY Stream, FRI, and The University of Texas system are not liable for anything related to this code.
  
 THIS CODE SHOULD NOT BE USED TO DIAGNOSE ANY KIND OF MEDICAL CONDITION.
@@ -41,6 +41,14 @@ https://stackoverflow.com/questions/8211128/multiple-distinct-pages-in-one-html-
             width: 300px; /* Adjust the size of the image */
             display: inline-block; /* Aligns the image to the right */
         }
+        /* Hide all pages initially */
+        .page {
+            display: none;
+        }
+        /* Show the active page */
+        .page.active {
+            display: block;
+        }
     </style>
 </head> 
 
@@ -49,7 +57,6 @@ https://stackoverflow.com/questions/8211128/multiple-distinct-pages-in-one-html-
         <h1>PMS or Pregnancy?</h1>
     </div>
 
-    <!-- Image below header, aligned to the right-middle -->
     <div id="image-container">
         <img src="https://github.com/Alisha-May/App4-Base_Code/blob/gh-pages/PMSPreg.jpg?raw=true" alt="image of PMS/Pregnancy">
     </div>
@@ -87,68 +94,34 @@ https://stackoverflow.com/questions/8211128/multiple-distinct-pages-in-one-html-
                 <p>Probability of Having PMS: <strong>${PMSPercent.toFixed(1)}%</strong></p>
                 <p>Probability of Being Pregnant: <strong>${pregnancyPercent.toFixed(1)}%</strong></p>`;
             
-            // Clear stored values for the next test
             localStorage.removeItem("PMS_count");
             localStorage.removeItem("pregnancy_count");
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            let pages = document.querySelectorAll(".page");
+            let links = document.querySelectorAll("a[href^='#']");
+
+            function showPage(hash) {
+                pages.forEach(page => page.classList.remove("active"));
+                let activePage = document.querySelector(hash);
+                if (activePage) {
+                    activePage.classList.add("active");
+                }
+            }
+
+            links.forEach(link => {
+                link.addEventListener("click", function (event) {
+                    let targetId = this.getAttribute("href");
+                    if (targetId.startsWith("#")) {
+                        event.preventDefault(); 
+                        showPage(targetId);
+                    }
+                });
+            });
+
+            showPage("#one");
+        });
     </script>
-
-    <div class="page" id="one">
-        <div id="header" class="w3-container w3-flat-pomegranate">
-            <h1>Question 1</h1>
-        </div>
-        <div id="content" class="w3-container">
-            <p>Have you missed one or more period?</p>    
-        </div>
-        <a href="#two" onclick="pregnancyAdd();" class="w3-btn w3-black">Yes</a>
-        <a href="#two" onclick="PMSAdd();" class="w3-btn w3-black">No</a>
-    </div>
-
-    <div class="page" id="two">
-        <div class="w3-container w3-flat-pomegranate">
-            <h1>Question 2</h1>
-        </div>
-        <div id="content" class="w3-container">
-            <p>Are you experiencing nausea with vomiting?</p>
-        </div>
-        <a href="#three" onclick="pregnancyAdd();" class="w3-btn w3-black">Yes</a>
-        <a href="#three" onclick="PMSAdd();" class="w3-btn w3-black">No</a>
-    </div>
-
-    <div class="page" id="three">
-        <div id="header" class="w3-container w3-flat-pomegranate">
-            <h1>Question 3</h1>
-        </div>
-        <div id="content" class="w3-container">
-            <p>Are you feeling more tired, sleeping more or less, and/or taking more naps?</p>    
-        </div>
-        <a href="#four" onclick="PMSAdd();" class="w3-btn w3-black">Yes</a>
-        <a href="#four" onclick="pregnancyAdd();" class="w3-btn w3-black">No</a>
-    </div>
-
-    <div class="page" id="four">
-        <div id="header" class="w3-container w3-flat-pomegranate">
-            <h1>Question 4</h1>
-        </div>
-        <div id="content" class="w3-container">
-            <p>Are you experiencing diahrrhea?</p>    
-        </div>
-        <a href="#results" onclick="PMSAdd();" class="w3-btn w3-black">Yes</a>
-        <a href="#results" onclick="pregnancyAdd();" class="w3-btn w3-black">No</a>
-    </div>
-    
-    <div class="page" id="results">
-        <div class="w3-container w3-flat-pomegranate">
-            <h1>Results</h1>
-        </div>
-        <div id="content" class="w3-container w3-flat-pomegranate">
-            <p id="resultsText"></p>
-            <a href="#results" onclick="resultsPercent();" class="w3-btn w3-black"> Show Results </a>
-        </div>
-    </div>
-
-    <footer class="w3-bottom w3-container w3-flat-pomegranate">
-        <p>DIY!</p>
-    </footer>
 </body>
 </html>
