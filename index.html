@@ -37,11 +37,11 @@ https://stackoverflow.com/questions/8211128/multiple-distinct-pages-in-one-html-
 </head> 
 
 <script>
-    function allergyAdd() {
-        let allergy_count = localStorage.getItem("allergy_count") || 0;
-        allergy_count = parseInt(allergy_count) + 1;
-        localStorage.setItem("allergy_count", allergy_count);
-        console.log("Allergy Count: " + allergy_count);
+    function PMSAdd() {
+        let PMS_count = localStorage.getItem("PMS_count") || 0;
+        PMS_count = parseInt(PMS_count) + 1;
+        localStorage.setItem("PMS_count", PMS_count);
+        console.log("PMS Count: " + PMS);
     }
     /* Created fcuntion named "allergyAdd", the localstorage.getitem allows the 
     stored value of the allergy count to be retrieved from the browsers local storage, 
@@ -63,10 +63,10 @@ https://stackoverflow.com/questions/8211128/multiple-distinct-pages-in-one-html-
     */
 
     function resultsPercent() {
-        var allergy_count = parseInt(localStorage.getItem("allergy_count")) || 0;
+        var PMS_count = parseInt(localStorage.getItem("PMS_count")) || 0;
         var cold_count = parseInt(localStorage.getItem("cold_count")) || 0;
         
-        var allergyPercent = (allergy_count / 4) * 100;
+        var PMSPercent = (PMS_count / 4) * 100;
         var coldPercent = (cold_count / 4) * 100;
         
     /* The resultsPercent function calculates the percentage of two stored counts, allergy_count
@@ -78,7 +78,7 @@ https://stackoverflow.com/questions/8211128/multiple-distinct-pages-in-one-html-
 
         document.getElementById("resultsText").innerHTML = 
             `<h2>Diagnosis Results:</h2>
-            <p>Probability of Having Allergies: <strong>${allergyPercent.toFixed(1)}%</strong></p>
+            <p>Probability of Having PMS: <strong>${PMSPercent.toFixed(1)}%</strong></p>
             <p>Probability of Having a Cold: <strong>${coldPercent.toFixed(1)}%</strong></p>`;
         
         /* This code updates the "resultsText" element with an <h2> heading and two <p> tags showing 
@@ -87,7 +87,7 @@ https://stackoverflow.com/questions/8211128/multiple-distinct-pages-in-one-html-
         */
 
         // Clear stored values for the next test
-        localStorage.removeItem("allergy_count");
+        localStorage.removeItem("PMS_count");
         localStorage.removeItem("cold_count");
         
     /* This code clears previously stored values by removing 
@@ -129,11 +129,11 @@ https://stackoverflow.com/questions/8211128/multiple-distinct-pages-in-one-html-
     -->
 <body>
     <div id="header" class="w3-container w3-flat-pomegranate">
-        <h1>Cold or Allergies?</h1>
+        <h1>PMS or Pregnancy?</h1>
     </div>
 
     <div id="content" class="w3-container">
-        <p>Are you feeling like you might have a cold but wonder if it is allergies? Answer a few short questions to find out!</p>
+        <p>Are you feeling like you might be pregnant but wonder if it is just PMS? Answer a few short questions to find out!</p>
         <a href="#one" class="w3-btn w3-grey w3-round"> Get Started </a>
 
         <p><strong>Disclaimer:</strong> This is for entertainment purposes only and should not be used for medical diagnosis.</p>
