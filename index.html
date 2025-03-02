@@ -52,11 +52,11 @@ https://stackoverflow.com/questions/8211128/multiple-distinct-pages-in-one-html-
 
     
 
-    function coldAdd() {
-        let cold_count = localStorage.getItem("cold_count") || 0;
-        cold_count = parseInt(cold_count) + 1;
-        localStorage.setItem("cold_count", cold_count);
-        console.log("Cold Count: " + cold_count);
+    function pregnancyAdd() {
+        let pregnancy_count = localStorage.getItem("pregnancy_count") || 0;
+        pregnancy_count = parseInt(pregnancy_count) + 1;
+        localStorage.setItem("pregnancy_count", pregnancy_count);
+        console.log("Pregnancy Count: " + cold_count);
     }
     /* coding here serves the same function as articulated in the above 
     code this time relating to "cold count"
@@ -64,10 +64,10 @@ https://stackoverflow.com/questions/8211128/multiple-distinct-pages-in-one-html-
 
     function resultsPercent() {
         var PMS_count = parseInt(localStorage.getItem("PMS_count")) || 0;
-        var cold_count = parseInt(localStorage.getItem("cold_count")) || 0;
+        var Pregnancy_count = parseInt(localStorage.getItem("Pregnancy_count")) || 0;
         
         var PMSPercent = (PMS_count / 4) * 100;
-        var coldPercent = (cold_count / 4) * 100;
+        var pregnancyPercent = (pregnancy_count / 4) * 100;
         
     /* The resultsPercent function calculates the percentage of two stored counts, allergy_count
     and cold_count. It first retrieves allergy_count and cold_count from localStorage, 
@@ -79,7 +79,7 @@ https://stackoverflow.com/questions/8211128/multiple-distinct-pages-in-one-html-
         document.getElementById("resultsText").innerHTML = 
             `<h2>Diagnosis Results:</h2>
             <p>Probability of Having PMS: <strong>${PMSPercent.toFixed(1)}%</strong></p>
-            <p>Probability of Having a Cold: <strong>${coldPercent.toFixed(1)}%</strong></p>`;
+            <p>Probability of Being Pregnant: <strong>${pregnancyPercent.toFixed(1)}%</strong></p>`;
         
         /* This code updates the "resultsText" element with an <h2> heading and two <p> tags showing 
         allergy and cold probabilities. It uses template literals ' to insert allergyPercent and 
@@ -88,7 +88,7 @@ https://stackoverflow.com/questions/8211128/multiple-distinct-pages-in-one-html-
 
         // Clear stored values for the next test
         localStorage.removeItem("PMS_count");
-        localStorage.removeItem("cold_count");
+        localStorage.removeItem("pregnancy_count");
         
     /* This code clears previously stored values by removing 
     "allergy_count" and "cold_count" from localStorage, ensuring
