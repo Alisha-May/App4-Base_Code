@@ -1,8 +1,9 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html> 
+<html> 
     <!-- The following code has been developed by students and/or researchers of the Freshman Research Initiative DIY Diagnostics Stream at The University of Texas at Austin.  This code is shared for demonstration purposes and should not be considered a product -- it is for entertainment purposes only.  Any user of this code does so at their own risk. Members of the DIY Stream, FRI, and The University of Texas system are not liable for anything related to this code.
  
 THIS CODE SHOULD NOT BE USED TO DIAGNOSE ANY KIND OF MEDICAL CONDITION.
+ 
  
 Authors in chronological order of contribution:
 Tim Riedel
@@ -17,6 +18,7 @@ triedel@utexas.edu
  
 Brief Description of Goal of Code:
 The goal of this code is to create a diagnostic website used to help an individual distinguish whether their symptoms are more likely indicative of PMS or Pregnancy.
+
  
 Known Issues:
 There are currently no known issues.
@@ -26,102 +28,225 @@ https://stackoverflow.com/questions/8211128/multiple-distinct-pages-in-one-html-
 -->
 <head> 
     <title>PMS or Early Signs of Pregnancy?</title> 
+    <!-- Changed title from "Cold or Allergies?" to "PMS or Early Signs of Pregnancy?"
+    -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="w3.css">
     <link rel="stylesheet" href="w3-colors-flat.css">
-    <style>
-        /* CSS for positioning the image */
-        #image-container {
-            text-align: center; /* Align the image to the center of the container */
-            padding-top: 20px; /* Optional: adds space above the image */
-        }
-        #image-container img {
-            max-width: 100%; /* Makes sure the image doesn't overflow */
-            width: 300px; /* Adjust the size of the image */
-            display: inline-block; /* Aligns the image to the right */
-        }
-        /* Hide all pages initially */
-        .page {
-            display: none;
-        }
-        /* Show the active page */
-        .page.active {
-            display: block;
-        }
-    </style>
 </head> 
+<img src="https://github.com/Alisha-May/App4-Base_Code/blob/gh-pages/PMSPreg.jpg?raw=true" alt="image of PMS/Pregnancy" width="300">
+<script>
+    function PMSAdd() {
+        let PMS_count = localStorage.getItem("PMS_count") || 0;
+        PMS_count = parseInt(PMS_count) + 1;
+        localStorage.setItem("PMS_count", PMS_count);
+        console.log("PMS Count: " + PMS_count);
+    }
+    /* Created fcuntion named "allergyAdd", the localstorage.getitem allows the 
+    stored value of the allergy count to be retrieved from the browsers local storage, 
+    parseInt converts allergy count from a string to an integer. +1 means the values increase
+    by one, .setitem allows allergy count to persist for future use, console.log  
+    logs the updated allergy count for the browsers console, allowing the current count to be visible.
+    */
 
+    
+
+    function pregnancyAdd() {
+        let pregnancy_count = localStorage.getItem("pregnancy_count") || 0;
+        pregnancy_count = parseInt(pregnancy_count) + 1;
+        localStorage.setItem("pregnancy_count", pregnancy_count);
+        console.log("Pregnancy Count: " + pregnancy_count);
+    }
+    /* coding here serves the same function as articulated in the above 
+    code this time relating to "cold count"
+    */
+
+    function resultsPercent() {
+        var PMS_count = parseInt(localStorage.getItem("PMS_count")) || 0;
+        var pregnancy_count = parseInt(localStorage.getItem("pregnancy_count")) || 0;
+        
+        var PMSPercent = (PMS_count / 4) * 100;
+        var pregnancyPercent = (pregnancy_count / 4) * 100;
+        
+    /* The resultsPercent function calculates the percentage of two stored counts, allergy_count
+    and cold_count. It first retrieves allergy_count and cold_count from localStorage, 
+    converting them to integers while defaulting to 0 if they are null or undefined. Then,
+    it calculates allergyPercent by dividing allergy_count by 4 and multiplying by 100 to
+    get a percentage, and does the same for coldPercent using cold_count.
+    */
+
+        document.getElementById("resultsText").innerHTML = 
+            `<h2>Diagnosis Results:</h2>
+            <p>Probability of Having PMS: <strong>${PMSPercent.toFixed(1)}%</strong></p>
+            <p>Probability of Being Pregnant: <strong>${pregnancyPercent.toFixed(1)}%</strong></p>`;
+        
+        /* This code updates the "resultsText" element with an <h2> heading and two <p> tags showing 
+        allergy and cold probabilities. It uses template literals ' to insert allergyPercent and 
+        coldPercent, rounding them to one decimal place for clarity.
+        */
+
+        // Clear stored values for the next test
+        localStorage.removeItem("PMS_count");
+        localStorage.removeItem("pregnancy_count");
+        
+    /* This code clears previously stored values by removing 
+    "allergy_count" and "cold_count" from localStorage, ensuring
+    a fresh start for the next test.
+    */
+    
+    }
+</script>
+
+<style>	
+.body {
+    margin: 0em;
+}
+
+.page {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: -100vw;
+    overflow-y: auto;
+    z-index: 0;
+    background-color: hsl(0,0%,100%);
+}
+
+.page:target {
+    left: 0vw;
+    z-index: 1;
+}
+</style>
+
+<!-- This CSS creates a fullscreen slide-in effect using :target. 
+    The .page starts off-screen (left: -100vw, z-index: 0) and 
+    becomes visible (left: 0vw, z-index: 1) when targeted via an 
+    anchor link. It allows vertical scrolling and has a white 
+    background, enabling smooth, JavaScript-free transitions 
+    for SPAs or modals.
+    -->
 <body>
     <div id="header" class="w3-container w3-flat-pomegranate">
         <h1>PMS or Pregnancy?</h1>
     </div>
 
-    <div id="image-container">
-        <img src="https://github.com/Alisha-May/App4-Base_Code/blob/gh-pages/PMSPreg.jpg?raw=true" alt="image of PMS/Pregnancy">
-    </div>
-
     <div id="content" class="w3-container">
         <p>Are you feeling like you might be pregnant but wonder if it is just PMS? Answer a few short questions to find out!</p>
         <a href="#one" class="w3-btn w3-grey w3-round"> Get Started </a>
+
         <p><strong>Disclaimer:</strong> This is for entertainment purposes only and should not be used for medical diagnosis.</p>
     </div>
 
-    <script>
-        function PMSAdd() {
-            let PMS_count = localStorage.getItem("PMS_count") || 0;
-            PMS_count = parseInt(PMS_count) + 1;
-            localStorage.setItem("PMS_count", PMS_count);
-            console.log("PMS Count: " + PMS_count);
-        }
+    <!-- This code creates a "Cold or Allergies?" quiz introduction. The #header 
+    section displays a heading with a pomegranate-colored background (w3-flat-pomegranate), 
+    and the #content section provides a brief description and a "Get Started" 
+    button that links to #one. A disclaimer at the bottom clarifies that the
+    quiz is for entertainment only. The content is styled using W3.CSS classes 
+    for layout and design.
+    -->
 
-        function pregnancyAdd() {
-            let pregnancy_count = localStorage.getItem("pregnancy_count") || 0;
-            pregnancy_count = parseInt(pregnancy_count) + 1;
-            localStorage.setItem("pregnancy_count", pregnancy_count);
-            console.log("Pregnancy Count: " + pregnancy_count);
-        }
+    <!-- Question 1 -->
+    <div class="page" id="one">
+        <div id="header" class="w3-container w3-flat-pomegranate">
+            <h1>Question 1</h1>
+        </div>
+        <div id="content" class="w3-container">
+            <p>Have you missed one or more period?</p>    
+        </div>
+        <a href="#two" onclick="pregnancyAdd();" class="w3-btn w3-black">Yes</a>
+        <a href="#two" onclick="PMSAdd();" class="w3-btn w3-black">No</a>
+    </div>
 
-        function resultsPercent() {
-            var PMS_count = parseInt(localStorage.getItem("PMS_count")) || 0;
-            var pregnancy_count = parseInt(localStorage.getItem("pregnancy_count")) || 0;
-            
-            var PMSPercent = (PMS_count / 4) * 100;
-            var pregnancyPercent = (pregnancy_count / 4) * 100;
-            
-            document.getElementById("resultsText").innerHTML = 
-                `<h2>Diagnosis Results:</h2>
-                <p>Probability of Having PMS: <strong>${PMSPercent.toFixed(1)}%</strong></p>
-                <p>Probability of Being Pregnant: <strong>${pregnancyPercent.toFixed(1)}%</strong></p>`;
-            
-            localStorage.removeItem("PMS_count");
-            localStorage.removeItem("pregnancy_count");
-        }
+    <!--
+    This HTML represents Question 1 of the quiz. The #one div, styled as 
+    a full-page element (page class), contains a heading with the question 
+    title and a content section that asks, "Are your eyes watery or itchy?"
+    Two "Yes" and "No" buttons are provided, each linking to the next question 
+    (#two). The "Yes" button calls the allergyAdd() function, while the "No"
+    button calls coldAdd(), updating counts for allergies or colds. The layout
+    uses W3.CSS classes for styling.
+    -->
+    
 
-        document.addEventListener("DOMContentLoaded", function () {
-            let pages = document.querySelectorAll(".page");
-            let links = document.querySelectorAll("a[href^='#']");
+    <!-- Question 2 -->
+    <div class="page" id="two">
+        <div class="w3-container w3-flat-pomegranate">
+            <h1>Question 2</h1>
+        </div>
+        <div id="content" class="w3-container">
+            <p>Are you experiencing nausea with vomiting?</p>
+        </div>
+        <a href="#three" onclick="pregnancyAdd();" class="w3-btn w3-black">Yes</a>
+        <a href="#three" onclick="PMSAdd();" class="w3-btn w3-black">No</a>
+    </div>
 
-            function showPage(hash) {
-                pages.forEach(page => page.classList.remove("active"));
-                let activePage = document.querySelector(hash);
-                if (activePage) {
-                    activePage.classList.add("active");
-                }
-            }
+    <!-- This HTML represents Question 2 of the quiz. The #two div, styled as a
+    full-page element (page class), features a heading for the question and a
+    content section asking, "Do you have a fever?" Two buttons, "Yes" and "No", 
+    lead to the next question (#three). The "Yes" button triggers the coldAdd() 
+    function, while the "No" button triggers the allergyAdd() function. The 
+    layout uses W3.CSS classes for styling.
+    -->
 
-            links.forEach(link => {
-                link.addEventListener("click", function (event) {
-                    let targetId = this.getAttribute("href");
-                    if (targetId.startsWith("#")) {
-                        event.preventDefault(); 
-                        showPage(targetId);
-                    }
-                });
-            });
+    <!-- Question 3 -->
+    <div class="page" id="three">
+        <div id="header" class="w3-container w3-flat-pomegranate">
+            <h1>Question 3</h1>
+        </div>
+        <div id="content" class="w3-container">
+            <p>Are you feeling more tired, sleeping more or less, and/or taking more naps?</p>    
+        </div>
+        <a href="#four" onclick="PMSAdd();" class="w3-btn w3-black">Yes</a>
+        <a href="#four" onclick="pregnancyAdd();" class="w3-btn w3-black">No</a>
+    </div>
 
-            showPage(window.location.hash || "#one");
-        });
-    </script>
+    <!--
+    This HTML represents Question 3 of the quiz. The #three div, styled as a full-page 
+    element (page class), contains a heading for the question and a content section asking,
+    "Do you have a sore throat?" Two buttons, "Yes" and "No", both link to the next question
+    (#four). The "Yes" button triggers the coldAdd() function, while the "No" button triggers
+    the allergyAdd() function. The layout uses W3.CSS classes for styling.
+    -->
+
+    <!-- Question 4 -->
+    <div class="page" id="four">
+        <div id="header" class="w3-container w3-flat-pomegranate">
+            <h1>Question 4</h1>
+        </div>
+        <div id="content" class="w3-container">
+            <p>Are you experiencing diahrrhea?</p>    
+        </div>
+        <a href="#results" onclick="PMSAdd();" class="w3-btn w3-black">Yes</a>
+        <a href="#results" onclick="pregnancyAdd();" class="w3-btn w3-black">No</a>
+    </div>
+<!-- This HTML represents Question 4 of the quiz. The #four div, styled as a full-page 
+    element (page class), contains a heading for the question and a content section 
+    asking, "Are your symptoms seasonal or chronic?" Two buttons, "Yes" and "No", 
+    both link to the results (#results). The "Yes" button triggers the allergyAdd() 
+    function, while the "No" button triggers the coldAdd() function. The layout
+    uses W3.CSS classes for styling.
+    -->
+    
+    <!-- Results Page -->
+    <div class="page" id="results">
+        <div class="w3-container w3-flat-pomegranate">
+            <h1>Results</h1>
+        </div>
+        <div id="content" class="w3-container w3-flat-pomegranate">
+            <p id="resultsText"></p>
+            <a href="#results" onclick="resultsPercent();" class="w3-btn w3-black"> Show Results </a>
+        </div>
+    </div>
+<!-- This HTML represents the Results page of the quiz. The #results div, styled as a full-page element 
+    (page class), contains a heading for the results and a content section with a placeholder for 
+    the results text. A "Show Results" button triggers the resultsPercent() function, which displays the results.
+    The layout uses W3.CSS classes for styling.
+    -->
+    
+    <footer class="w3-bottom w3-container w3-flat-pomegranate">
+        <p>DIY!</p>
+    </footer>
 </body>
 </html>
