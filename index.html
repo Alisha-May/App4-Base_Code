@@ -56,7 +56,7 @@ https://stackoverflow.com/questions/8211128/multiple-distinct-pages-in-one-html-
         let pregnancy_count = localStorage.getItem("pregnancy_count") || 0;
         pregnancy_count = parseInt(pregnancy_count) + 1;
         localStorage.setItem("pregnancy_count", pregnancy_count);
-        console.log("Pregnancy Count: " + pregnncy_count);
+        console.log("Pregnancy Count: " + pregnancy_count);
     }
     /* coding here serves the same function as articulated in the above 
     code this time relating to "cold count"
@@ -64,7 +64,7 @@ https://stackoverflow.com/questions/8211128/multiple-distinct-pages-in-one-html-
 
     function resultsPercent() {
         var PMS_count = parseInt(localStorage.getItem("PMS_count")) || 0;
-        var Pregnancy_count = parseInt(localStorage.getItem("Pregnancy_count")) || 0;
+        var pregnancy_count = parseInt(localStorage.getItem("pregnancy_count")) || 0;
         
         var PMSPercent = (PMS_count / 4) * 100;
         var pregnancyPercent = (pregnancy_count / 4) * 100;
